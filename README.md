@@ -13,5 +13,5 @@
 ## Sadržaj web aplikacije
 - Admin i User login
 - Admin može dodavati brisati i uređivati pizze u bazi podataka i izlistati sve Usere
-- User može samo izlistavati sve pizze ali tako da ne dobije sve informacije vezane uz pojedinačnu pizzu
+- User može samo izlistavati sve pizze, ali tako da ne dobije sve informacije vezane uz pojedinačnu pizzu
 - Uz to User može uređivati svoje ime i prezime u bazi podataka
