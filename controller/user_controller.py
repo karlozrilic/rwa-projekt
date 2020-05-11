@@ -6,8 +6,17 @@ import datetime
 from model import db
 from model.user import User
 from service.auth_service import authenticated, authenticated_admin
+import re
 
-api = Namespace(name='Menage Users API', path='/api/users')
+regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+
+def check(email):  
+    if(re.search(regex,email)):  
+       return True 
+    else:  
+        return False
+
+api = Namespace(name='Manage Users API', path='/api/users')
 
 user_dto = api.model('User', {
     'email': fields.String(required=True, description='Email'),
@@ -33,15 +42,18 @@ user_update_dto = api.model('UserUpdate', {
 
 @api.route('/')
 class UserListResource(Resource):
-    @api.doc(description='Signup', responses={201: 'Success'})
+    @api.doc(description='Signup', responses={201: 'Success', 406: 'Ivalid email address'})
     @api.expect(user_signup_dto)
     def post(self):
-        hashed_password = generate_password_hash(api.payload['password'], method='sha256')
-        new_user = User(email=api.payload['email'], first_name=api.payload['first_name'], last_name=api.payload['last_name'], password=hashed_password, admin=False)
-        db.session.add(new_user)
-        db.session.commit()
+        if check(api.payload['email']):
+            hashed_password = generate_password_hash(api.payload['password'], method='sha256')
+            new_user = User(email=api.payload['email'], first_name=api.payload['first_name'], last_name=api.payload['last_name'], password=hashed_password, admin=False)
+            db.session.add(new_user)
+            db.session.commit()
         
-        return {'message': 'New user created!'}, 201
+            return {'message': 'New user created!'}, 201
+        else:
+            api.abort(406)
 
     @api.doc(description='Get user details', responses={200: 'Success', 401: 'Unauthorized'}, security='Bearer Auth')
     @authenticated
