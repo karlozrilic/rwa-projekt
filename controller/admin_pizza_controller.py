@@ -63,36 +63,14 @@ class PizzaListResource(Resource):
             cijena = None
         
         pizzas = Pizzas.query.filter_by(user_id=current_user.id)
-        
-        if sastojci and cijena and naziv:
-            print(f'..filtering by sastojci {sastojci}, cijena {cijena} and naziv {naziv}')
-            pizzas = pizzas.filter(Pizzas.sastojci.ilike('%'+sastojci+'%')).filter(Pizzas.cijena.ilike('%'+str(cijena)+'%')).filter(Pizzas.naziv.ilike('%'+naziv+'%'))
-            #pizzas = pizzas.filter_by(sastojci=sastojci, cijena=cijena, naziv=naziv)
-        elif sastojci and cijena:
-            print(f'..filtering by sastojci {sastojci} and cijena {cijena}')
-            pizzas = pizzas.filter(Pizzas.sastojci.ilike('%'+sastojci+'%')).filter(Pizzas.cijena.ilike('%'+str(cijena)+'%'))
-            #pizzas = pizzas.filter_by(sastojci=sastojci, cijena=cijena)
-        elif sastojci and naziv:
-            print(f'..filtering by sastojci {sastojci} and naziv {naziv}')
-            pizzas = pizzas.filter(Pizzas.sastojci.ilike('%'+sastojci+'%')).filter(Pizzas.naziv.ilike('%'+naziv+'%'))
-            #pizzas = pizzas.filter_by(sastojci=sastojci, naziv=naziv)
-        elif cijena and naziv:
-            print(f'..filtering by cijena {cijena} and naziv {naziv}')
-            pizzas = pizzas.filter(Pizzas.cijena.ilike('%'+str(cijena)+'%')).filter(Pizzas.naziv.ilike('%'+naziv+'%'))
-            #pizzas = pizzas.filter_by(cijena=cijena, naziv=naziv)
-        elif sastojci:
-            print(f'..filtering by sastojci {sastojci}')
+
+        if sastojci:
             pizzas = pizzas.filter(Pizzas.sastojci.ilike('%'+sastojci+'%'))
-            #pizzas = pizzas.filter_by(sastojci=sastojci)
-        elif cijena:
-            print(f'..filtering by cijena {cijena}')
+        if cijena:
             pizzas = pizzas.filter(Pizzas.cijena.ilike('%'+str(cijena)+'%'))
-            #pizzas = pizzas.filter_by(cijena=cijena)
-        elif naziv:
-            print(f'..filtering by naziv {naziv}')
+        if naziv:
             pizzas = pizzas.filter(Pizzas.naziv.ilike('%'+naziv+'%'))
-            #pizzas = pizzas.filter_by(naziv=naziv)
-   
+
         output = []
 
         for pizza in pizzas:
