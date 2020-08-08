@@ -6,7 +6,7 @@
 3. Aktiviraj virtualnu okolinu naredbom `venv\Scripts\activate`
 4. Instaliraj potrebne stvari pomoću requirements.txt datoteke naredbom `pip install -r requirements.txt`
 5. Pokreni naredbom `python app.py`
-6. U web browseru upiši localhost:5000
+6. U web browseru upiši `localhost:5000`
 7. To je to!
 
 ## Sadržaj web aplikacije
